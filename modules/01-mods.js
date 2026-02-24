@@ -35,7 +35,11 @@ function sendMsgCopy(member, webhookURL, decorator, content, msg) {
 
   const webhook = new Discord.WebhookClient({ url: webhookURL });
 
-  webhook.send(payload);
+  webhook.send(payload).catch(e => {
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(msg));
+    u.errorHandler(e);
+  });
 
 }
 
