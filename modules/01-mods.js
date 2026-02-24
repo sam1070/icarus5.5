@@ -36,9 +36,7 @@ function sendMsgCopy(member, webhookURL, decorator, content, msg) {
   const webhook = new Discord.WebhookClient({ url: webhookURL });
 
   webhook.send(payload).catch(e => {
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(msg));
-    u.errorHandler(e);
+    u.errorHandler(e, msg);
   });
 
 }
@@ -59,9 +57,11 @@ async function watch(msg, oldState, newState) {
 
   let content = "";
 
-  if (!msg && oldState?.channelId !== newState?.channelId) {
+  if (!msg) {
+    if (oldState?.channelId === newState?.channelId) return;
     if (newState?.channel) content = `🎙️ Joined ${newState.channel.name}`;
     else if (oldState?.channel) content = `🔇 Left ${oldState.channel.name}`;
+    else return;
   }
 
   sendMsgCopy(member, config.webhooks.watchlist, decorator, content, msg);
