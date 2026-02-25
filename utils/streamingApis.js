@@ -95,6 +95,8 @@ const extraLife = {
 
 /** @param {string} error  */
 function twitchErrorHandler(error) {
+  // eslint-disable-next-line no-console
+  console.log(error);
   error = error.toString();
   if (config.twitch.clientSecret) error = error.replace(new RegExp(config.twitch.clientSecret, "g"), "<TWITCH SECRET>");
   if (config.api.thegamesdb) error = error.replace(new RegExp(config.api.thegamesdb, "g"), "<GAMES DB SECRET>");
